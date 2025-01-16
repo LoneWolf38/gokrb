@@ -6,14 +6,14 @@ import (
 	"testing"
 
 	"github.com/jcmturner/gofork/encoding/asn1"
-	"github.com/jcmturner/gokrb5/v8/client"
-	"github.com/jcmturner/gokrb5/v8/credentials"
-	"github.com/jcmturner/gokrb5/v8/gssapi"
-	"github.com/jcmturner/gokrb5/v8/iana/msgtype"
-	"github.com/jcmturner/gokrb5/v8/iana/nametype"
-	"github.com/jcmturner/gokrb5/v8/messages"
-	"github.com/jcmturner/gokrb5/v8/test/testdata"
-	"github.com/jcmturner/gokrb5/v8/types"
+	"github.com/LoneWolf38/gokrb/client"
+	"github.com/LoneWolf38/gokrb/credentials"
+	"github.com/LoneWolf38/gokrb/gssapi"
+	"github.com/LoneWolf38/gokrb/iana/msgtype"
+	"github.com/LoneWolf38/gokrb/iana/nametype"
+	"github.com/LoneWolf38/gokrb/messages"
+	"github.com/LoneWolf38/gokrb/test/testdata"
+	"github.com/LoneWolf38/gokrb/types"
 	"github.com/stretchr/testify/assert"
 )
 

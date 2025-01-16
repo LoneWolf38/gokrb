@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/jcmturner/gokrb5/v8/keytab"
-	"github.com/jcmturner/gokrb5/v8/types"
+	"github.com/LoneWolf38/gokrb/keytab"
+	"github.com/LoneWolf38/gokrb/types"
 )
 
 // Settings defines service side configuration settings.

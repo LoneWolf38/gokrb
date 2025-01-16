@@ -6,14 +6,14 @@ import (
 	"testing"
 	"time"
 
-	"github.com/jcmturner/gokrb5/v8/credentials"
-	"github.com/jcmturner/gokrb5/v8/iana"
-	"github.com/jcmturner/gokrb5/v8/iana/etypeID"
-	"github.com/jcmturner/gokrb5/v8/iana/msgtype"
-	"github.com/jcmturner/gokrb5/v8/iana/nametype"
-	"github.com/jcmturner/gokrb5/v8/iana/patype"
-	"github.com/jcmturner/gokrb5/v8/keytab"
-	"github.com/jcmturner/gokrb5/v8/test/testdata"
+	"github.com/LoneWolf38/gokrb/credentials"
+	"github.com/LoneWolf38/gokrb/iana"
+	"github.com/LoneWolf38/gokrb/iana/etypeID"
+	"github.com/LoneWolf38/gokrb/iana/msgtype"
+	"github.com/LoneWolf38/gokrb/iana/nametype"
+	"github.com/LoneWolf38/gokrb/iana/patype"
+	"github.com/LoneWolf38/gokrb/keytab"
+	"github.com/LoneWolf38/gokrb/test/testdata"
 	"github.com/stretchr/testify/assert"
 )
 
