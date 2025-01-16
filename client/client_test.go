@@ -3,14 +3,14 @@ package client
 import (
 	"testing"
 
-	"gopkg.in/jcmturner/gokrb5.v7/config"
-	"gopkg.in/jcmturner/gokrb5.v7/keytab"
+	"github.com/LoneWolf38/gokrb/config"
+	"github.com/LoneWolf38/gokrb/keytab"
 )
 
 func TestAssumePreauthentication(t *testing.T) {
 	t.Parallel()
 
-	cl := NewClientWithKeytab("username", "REALM", &keytab.Keytab{}, &config.Config{}, AssumePreAuthentication(true))
+	cl := NewWithKeytab("username", "REALM", &keytab.Keytab{}, &config.Config{}, AssumePreAuthentication(true))
 	if !cl.settings.assumePreAuthentication {
 		t.Fatal("assumePreAuthentication should be true")
 	}

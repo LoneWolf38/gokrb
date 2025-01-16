@@ -6,15 +6,15 @@ import (
 	"testing"
 
 	"github.com/jcmturner/gofork/encoding/asn1"
+	"github.com/LoneWolf38/gokrb/client"
+	"github.com/LoneWolf38/gokrb/credentials"
+	"github.com/LoneWolf38/gokrb/gssapi"
+	"github.com/LoneWolf38/gokrb/iana/msgtype"
+	"github.com/LoneWolf38/gokrb/iana/nametype"
+	"github.com/LoneWolf38/gokrb/messages"
+	"github.com/LoneWolf38/gokrb/test/testdata"
+	"github.com/LoneWolf38/gokrb/types"
 	"github.com/stretchr/testify/assert"
-	"gopkg.in/jcmturner/gokrb5.v7/client"
-	"gopkg.in/jcmturner/gokrb5.v7/credentials"
-	"gopkg.in/jcmturner/gokrb5.v7/gssapi"
-	"gopkg.in/jcmturner/gokrb5.v7/iana/msgtype"
-	"gopkg.in/jcmturner/gokrb5.v7/iana/nametype"
-	"gopkg.in/jcmturner/gokrb5.v7/messages"
-	"gopkg.in/jcmturner/gokrb5.v7/test/testdata"
-	"gopkg.in/jcmturner/gokrb5.v7/types"
 )
 
 const (
@@ -33,7 +33,7 @@ func TestKRB5Token_Unmarshal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Error unmarshalling KRB5Token: %v", err)
 	}
-	assert.Equal(t, gssapi.OID(gssapi.OIDKRB5), mt.OID, "KRB5Token OID not as expected.")
+	assert.Equal(t, gssapi.OIDKRB5.OID(), mt.OID, "KRB5Token OID not as expected.")
 	assert.Equal(t, []byte{1, 0}, mt.tokID, "TokID not as expected")
 	assert.Equal(t, msgtype.KRB_AP_REQ, mt.APReq.MsgType, "KRB5Token AP_REQ does not have the right message type.")
 	assert.Equal(t, int32(0), mt.KRBError.ErrorCode, "KRBError in KRB5Token does not indicate no error.")

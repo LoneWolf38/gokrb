@@ -1,24 +1,23 @@
 package messages
 
 import (
-	"crypto/rand"
 	"fmt"
 	"log"
 	"time"
 
 	"github.com/jcmturner/gofork/encoding/asn1"
-	"gopkg.in/jcmturner/gokrb5.v7/asn1tools"
-	"gopkg.in/jcmturner/gokrb5.v7/crypto"
-	"gopkg.in/jcmturner/gokrb5.v7/iana"
-	"gopkg.in/jcmturner/gokrb5.v7/iana/adtype"
-	"gopkg.in/jcmturner/gokrb5.v7/iana/asnAppTag"
-	"gopkg.in/jcmturner/gokrb5.v7/iana/errorcode"
-	"gopkg.in/jcmturner/gokrb5.v7/iana/flags"
-	"gopkg.in/jcmturner/gokrb5.v7/iana/keyusage"
-	"gopkg.in/jcmturner/gokrb5.v7/keytab"
-	"gopkg.in/jcmturner/gokrb5.v7/krberror"
-	"gopkg.in/jcmturner/gokrb5.v7/pac"
-	"gopkg.in/jcmturner/gokrb5.v7/types"
+	"github.com/LoneWolf38/gokrb/asn1tools"
+	"github.com/LoneWolf38/gokrb/crypto"
+	"github.com/LoneWolf38/gokrb/iana"
+	"github.com/LoneWolf38/gokrb/iana/adtype"
+	"github.com/LoneWolf38/gokrb/iana/asnAppTag"
+	"github.com/LoneWolf38/gokrb/iana/errorcode"
+	"github.com/LoneWolf38/gokrb/iana/flags"
+	"github.com/LoneWolf38/gokrb/iana/keyusage"
+	"github.com/LoneWolf38/gokrb/keytab"
+	"github.com/LoneWolf38/gokrb/krberror"
+	"github.com/LoneWolf38/gokrb/pac"
+	"github.com/LoneWolf38/gokrb/types"
 )
 
 // Reference: https://www.ietf.org/rfc/rfc4120.txt
@@ -60,13 +59,11 @@ func NewTicket(cname types.PrincipalName, crealm string, sname types.PrincipalNa
 	if err != nil {
 		return Ticket{}, types.EncryptionKey{}, krberror.Errorf(err, krberror.EncryptingError, "error getting etype for new ticket")
 	}
-	ks := etype.GetKeyByteSize()
-	kv := make([]byte, ks, ks)
-	rand.Read(kv)
-	sessionKey := types.EncryptionKey{
-		KeyType:  eTypeID,
-		KeyValue: kv,
+	sessionKey, err := types.GenerateEncryptionKey(etype)
+	if err != nil {
+		return Ticket{}, types.EncryptionKey{}, krberror.Errorf(err, krberror.EncryptingError, "error generating session key")
 	}
+
 	etp := EncTicketPart{
 		Flags:     flags,
 		Key:       sessionKey,
@@ -83,7 +80,7 @@ func NewTicket(cname types.PrincipalName, crealm string, sname types.PrincipalNa
 		return Ticket{}, types.EncryptionKey{}, krberror.Errorf(err, krberror.EncodingError, "error marshalling ticket encpart")
 	}
 	b = asn1tools.AddASNAppTag(b, asnAppTag.EncTicketPart)
-	skey, err := sktab.GetEncryptionKey(sname, srealm, kvno, eTypeID)
+	skey, _, err := sktab.GetEncryptionKey(sname, srealm, kvno, eTypeID)
 	if err != nil {
 		return Ticket{}, types.EncryptionKey{}, krberror.Errorf(err, krberror.EncryptingError, "error getting encryption key for new ticket")
 	}
@@ -193,7 +190,7 @@ func (t *Ticket) DecryptEncPart(keytab *keytab.Keytab, sname *types.PrincipalNam
 	if sname == nil {
 		sname = &t.SName
 	}
-	key, err := keytab.GetEncryptionKey(*sname, t.Realm, t.EncPart.KVNO, t.EncPart.EType)
+	key, _, err := keytab.GetEncryptionKey(*sname, t.Realm, t.EncPart.KVNO, t.EncPart.EType)
 	if err != nil {
 		return NewKRBError(t.SName, t.Realm, errorcode.KRB_AP_ERR_NOKEY, fmt.Sprintf("Could not get key from keytab: %v", err))
 	}
@@ -236,7 +233,7 @@ func (t *Ticket) GetPACType(keytab *keytab.Keytab, sname *types.PrincipalName, l
 				if sname == nil {
 					sname = &t.SName
 				}
-				key, err := keytab.GetEncryptionKey(*sname, t.Realm, t.EncPart.KVNO, t.EncPart.EType)
+				key, _, err := keytab.GetEncryptionKey(*sname, t.Realm, t.EncPart.KVNO, t.EncPart.EType)
 				if err != nil {
 					return isPAC, p, NewKRBError(t.SName, t.Realm, errorcode.KRB_AP_ERR_NOKEY, fmt.Sprintf("Could not get key from keytab: %v", err))
 				}

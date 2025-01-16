@@ -6,12 +6,13 @@ import (
 	"time"
 
 	"github.com/jcmturner/gofork/encoding/asn1"
-	"gopkg.in/jcmturner/gokrb5.v7/iana"
-	"gopkg.in/jcmturner/gokrb5.v7/iana/asnAppTag"
-	"gopkg.in/jcmturner/gokrb5.v7/iana/errorcode"
-	"gopkg.in/jcmturner/gokrb5.v7/iana/msgtype"
-	"gopkg.in/jcmturner/gokrb5.v7/krberror"
-	"gopkg.in/jcmturner/gokrb5.v7/types"
+	"github.com/LoneWolf38/gokrb/asn1tools"
+	"github.com/LoneWolf38/gokrb/iana"
+	"github.com/LoneWolf38/gokrb/iana/asnAppTag"
+	"github.com/LoneWolf38/gokrb/iana/errorcode"
+	"github.com/LoneWolf38/gokrb/iana/msgtype"
+	"github.com/LoneWolf38/gokrb/krberror"
+	"github.com/LoneWolf38/gokrb/types"
 )
 
 // KRBError implements RFC 4120 KRB_ERROR: https://tools.ietf.org/html/rfc4120#section-5.9.1.
@@ -57,6 +58,16 @@ func (k *KRBError) Unmarshal(b []byte) error {
 		return krberror.NewErrorf(krberror.KRBMsgError, "message ID does not indicate a KRB_ERROR. Expected: %v; Actual: %v", expectedMsgType, k.MsgType)
 	}
 	return nil
+}
+
+// Marshal a KRBError into bytes.
+func (k *KRBError) Marshal() ([]byte, error) {
+	b, err := asn1.Marshal(*k)
+	if err != nil {
+		return b, krberror.Errorf(err, krberror.EncodingError, "error marshaling KRBError")
+	}
+	b = asn1tools.AddASNAppTag(b, asnAppTag.KRBError)
+	return b, nil
 }
 
 // Error method implementing error interface on KRBError struct.

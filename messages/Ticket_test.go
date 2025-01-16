@@ -8,15 +8,15 @@ import (
 	"testing"
 	"time"
 
+	"github.com/LoneWolf38/gokrb/iana"
+	"github.com/LoneWolf38/gokrb/iana/addrtype"
+	"github.com/LoneWolf38/gokrb/iana/adtype"
+	"github.com/LoneWolf38/gokrb/iana/nametype"
+	"github.com/LoneWolf38/gokrb/iana/trtype"
+	"github.com/LoneWolf38/gokrb/keytab"
+	"github.com/LoneWolf38/gokrb/test/testdata"
+	"github.com/LoneWolf38/gokrb/types"
 	"github.com/stretchr/testify/assert"
-	"gopkg.in/jcmturner/gokrb5.v7/iana"
-	"gopkg.in/jcmturner/gokrb5.v7/iana/addrtype"
-	"gopkg.in/jcmturner/gokrb5.v7/iana/adtype"
-	"gopkg.in/jcmturner/gokrb5.v7/iana/nametype"
-	"gopkg.in/jcmturner/gokrb5.v7/iana/trtype"
-	"gopkg.in/jcmturner/gokrb5.v7/keytab"
-	"gopkg.in/jcmturner/gokrb5.v7/test/testdata"
-	"gopkg.in/jcmturner/gokrb5.v7/types"
 )
 
 func TestUnmarshalTicket(t *testing.T) {
@@ -143,7 +143,7 @@ func TestAuthorizationData_GetPACType_GOKRB5TestData(t *testing.T) {
 			AuthorizationData: a,
 		},
 	}
-	b, _ = hex.DecodeString(testdata.SYSHTTP_KEYTAB)
+	b, _ = hex.DecodeString(testdata.KEYTAB_SYSHTTP_TEST_GOKRB5)
 	kt := keytab.New()
 	kt.Unmarshal(b)
 	sname := types.PrincipalName{NameType: nametype.KRB_NT_PRINCIPAL, NameString: []string{"sysHTTP"}}

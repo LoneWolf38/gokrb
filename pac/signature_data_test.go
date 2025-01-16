@@ -4,9 +4,9 @@ import (
 	"encoding/hex"
 	"testing"
 
+	"github.com/LoneWolf38/gokrb/iana/chksumtype"
+	"github.com/LoneWolf38/gokrb/test/testdata"
 	"github.com/stretchr/testify/assert"
-	"gopkg.in/jcmturner/gokrb5.v7/iana/chksumtype"
-	"gopkg.in/jcmturner/gokrb5.v7/test/testdata"
 )
 
 func TestPAC_SignatureData_Unmarshal_Server_Signature(t *testing.T) {

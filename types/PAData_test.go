@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/LoneWolf38/gokrb/iana/patype"
+	"github.com/LoneWolf38/gokrb/test/testdata"
 	"github.com/stretchr/testify/assert"
-	"gopkg.in/jcmturner/gokrb5.v7/iana/patype"
-	"gopkg.in/jcmturner/gokrb5.v7/test/testdata"
 )
 
 func TestUnmarshalPADataSequence(t *testing.T) {

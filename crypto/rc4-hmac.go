@@ -7,11 +7,11 @@ import (
 	"hash"
 	"io"
 
+	"github.com/LoneWolf38/gokrb/crypto/rfc3961"
+	"github.com/LoneWolf38/gokrb/crypto/rfc4757"
+	"github.com/LoneWolf38/gokrb/iana/chksumtype"
+	"github.com/LoneWolf38/gokrb/iana/etypeID"
 	"golang.org/x/crypto/md4"
-	"gopkg.in/jcmturner/gokrb5.v7/crypto/rfc3961"
-	"gopkg.in/jcmturner/gokrb5.v7/crypto/rfc4757"
-	"gopkg.in/jcmturner/gokrb5.v7/iana/chksumtype"
-	"gopkg.in/jcmturner/gokrb5.v7/iana/etypeID"
 )
 
 // RC4HMAC implements Kerberos encryption type rc4-hmac

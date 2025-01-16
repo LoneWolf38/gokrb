@@ -25,4 +25,4 @@ Parsing Keytab files.
 
 Parsing krb5.conf files.
 */
-package gokrb5
+package gokrb
